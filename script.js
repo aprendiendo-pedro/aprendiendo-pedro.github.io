@@ -1,4 +1,3 @@
-Apply
 async function apiGithubFetch(endpoint, options = {}) {
     const proxyUrl = `https://aprendiendo-pedro.vercel.app/api/github?endpoint=${endpoint}`;
     const directUrl = `https://api.github.com/${endpoint}`;
