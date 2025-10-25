@@ -1,12 +1,36 @@
+Apply
+async function apiGithubFetch(endpoint, options = {}) {
+    const proxyUrl = `https://aprendiendo-pedro.vercel.app/api/github?endpoint=${endpoint}`;
+    const directUrl = `https://api.github.com/${endpoint}`;
+    const fetchOptions = {
+        headers: {
+            'Accept': 'application/vnd.github+json',
+            ...(options.headers || {})
+        },
+        ...options
+    };
+    try {
+        const proxyRes = await fetch(proxyUrl, fetchOptions);
+        if (proxyRes.ok) {
+            return proxyRes;
+        }
+        console.warn(`Proxy responded with status: ${proxyRes.status}. Falling back to direct fetch.`);
+    } catch (err) {
+        console.error('Proxy fetch failed:', err);
+    }
+    try {
+        return await fetch(directUrl, fetchOptions);
+    } catch (err2) {
+        console.error('Direct GitHub fetch failed:', err2);
+        return new Response(null, { status: 502, statusText: "Proxy and direct GitHub fetch failed" });
+    }
+}
+
+
 async function fetchKind(repoFullName) {
     try {
-        const propRes = await fetch(
-            `https://aprendiendo-pedro.vercel.app/api/github?endpoint=repos/${repoFullName}/properties/values`,
-            {
-                headers: {
-                    'Accept': 'application/vnd.github+json'
-                }
-            }
+        const propRes = await apiGithubFetch(
+            `repos/${repoFullName}/properties/values`
         );
         if (propRes.ok) {
             const propertyData = await propRes.json();
@@ -21,13 +45,8 @@ async function fetchKind(repoFullName) {
 
 async function getFirstHtmlFileName(repoFullName) {
     try {
-        const res = await fetch(
-            `https://aprendiendo-pedro.vercel.app/api/github?endpoint=repos/${repoFullName}/contents/`,
-            {
-                headers: {
-                    'Accept': 'application/vnd.github+json'
-                }
-            }
+        const res = await apiGithubFetch(
+            `repos/${repoFullName}/contents/`
         );
         if (res.ok) {
             const files = await res.json();
@@ -51,13 +70,8 @@ async function getRepoDetails(repoFullName, org) {
     let relatedSubjects = [];
     let firstHtmlFileName = null;
     try {
-        const propRes = await fetch(
-            `https://aprendiendo-pedro.vercel.app/api/github?endpoint=repos/${repoFullName}/properties/values`,
-            {
-                headers: {
-                    'Accept': 'application/vnd.github+json'
-                }
-            }
+        const propRes = await apiGithubFetch(
+            `repos/${repoFullName}/properties/values`
         );
         if (propRes.ok) {
             const propertyData = await propRes.json();
@@ -72,13 +86,8 @@ async function getRepoDetails(repoFullName, org) {
                 if (subjectsProp && Array.isArray(subjectsProp.value)) {
                     relatedSubjects = await Promise.all(
                         subjectsProp.value.map(async subjectName => {
-                            const subjectRes = await fetch(
-                                `https://aprendiendo-pedro.vercel.app/api/github?endpoint=repos/${org}/${subjectName}`,
-                                {
-                                    headers: {
-                                        'Accept': 'application/vnd.github+json'
-                                    }
-                                }
+                            const subjectRes = await apiGithubFetch(
+                                `repos/${org}/${subjectName}`
                             );
                             if (subjectRes.ok) {
                                 const subjectRepo = await subjectRes.json();
@@ -124,11 +133,7 @@ async function searchInOrg() {
 
     try {
         const repoQuery = encodeURIComponent(`${searchTerm} org:${org}`);
-        const repoRes = await fetch(`https://aprendiendo-pedro.vercel.app/api/github?endpoint=search/repositories?q=${repoQuery}`, {
-            headers: {
-                'Accept': 'application/vnd.github+json'
-            }
-        });
+        const repoRes = await apiGithubFetch(`search/repositories?q=${repoQuery}`);
         if (!repoRes.ok) throw new Error(`GitHub API error: ${repoRes.status}`);
         const repoData = await repoRes.json();
         const repoMap = {};
@@ -139,11 +144,7 @@ async function searchInOrg() {
         }
         if (expandedSearch) {
             const codeQuery = encodeURIComponent(`${searchTerm} org:${org}`);
-            const codeRes = await fetch(`https://aprendiendo-pedro.vercel.app/api/github?endpoint=search/code?q=${codeQuery}`, {
-                headers: {
-                    'Accept': 'application/vnd.github+json'
-                }
-            });
+            const codeRes = await apiGithubFetch(`search/code?q=${codeQuery}`);
             if (codeRes.ok) {
                 const codeData = await codeRes.json();
                 codeData.items.forEach(file => {
