@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description"
+              content="Search for repositories and code within the aprendiendo-cosas GitHub organization quickly and easily.">
+        <meta name="keywords"
+              content="GitHub, repository search, aprendiendo-cosas, code, open source, búsqueda, programación">
+        <title>Búsqueda en aprendiendo-cosas</title>
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="app-bar">
+                <span class="material-icons">search</span>
+                <h1>Búsqueda en aprendiendo-cosas</h1>
+            </div>
+            <div class="search-card">
+                <div class="search-container">
+                    <div class="input-field">
+                        <span class="material-icons">search</span>
+                        <input type="text"
+                               id="search-term"
+                               placeholder="Introduzca los términos de búsqueda">
+                    </div>
+                    <button class="mdc-button" onclick="searchInOrg()">
+                        <span class="material-icons">search</span>
+                        Buscar
+                    </button>
+                </div>
+                <div class="checkbox-wrapper">
+                    <label class="mdc-checkbox-label">
+                        <input type="checkbox" id="expanded-search">
+                        <span class="checkmark"></span>
+                        Búsqueda avanzada
+                    </label>
+                </div>
+            </div>
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <span>Buscando...</span>
+            </div>
+            <div id="results" class="results"></div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>

@@ -1,0 +1,356 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.5;
+    background-color: #fafafa;
+    min-height: 100vh;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.app-bar {
+    background-color: #42a5f5;
+    color: white;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 24px;
+}
+
+.app-bar .material-icons {
+    font-size: 28px;
+}
+
+h1 {
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.15px;
+    margin: 0;
+}
+
+.search-card {
+    background: white;
+    margin: 24px 16px;
+    padding: 24px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.search-container {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.input-field {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    align-items: center;
+    background: #f5f5f5;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.input-field:focus-within {
+    background: #eeeeee;
+}
+
+.input-field .material-icons {
+    position: absolute;
+    left: 16px;
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 20px;
+}
+
+input {
+    padding: 16px 16px 16px 48px;
+    font-size: 16px;
+    border: none;
+    background: transparent;
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
+    color: rgba(0, 0, 0, 0.87);
+    outline: none;
+}
+
+input::placeholder {
+    color: rgba(0, 0, 0, 0.38);
+}
+
+.mdc-button {
+    padding: 0 24px;
+    height: 48px;
+    background-color: #42a5f5;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1.25px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-family: 'Roboto', sans-serif;
+}
+
+.mdc-button:hover {
+    background-color: #7c4dff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.mdc-button:active {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.mdc-button .material-icons {
+    font-size: 18px;
+}
+
+.checkbox-wrapper {
+    margin-top: 8px;
+}
+
+.mdc-checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.87);
+    user-select: none;
+    position: relative;
+    padding-left: 32px;
+    min-height: 18px;
+}
+
+.mdc-checkbox-label input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    width: 0;
+    height: 0;
+}
+
+.checkmark {
+    position: absolute;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    border: 2px solid rgba(0, 0, 0, 0.54);
+    border-radius: 2px;
+    transition: all 0.2s;
+}
+
+.mdc-checkbox-label:hover input~.checkmark {
+    border-color: #42a5f5;
+}
+
+.mdc-checkbox-label input:checked~.checkmark {
+    background-color: #42a5f5;
+    border-color: #42a5f5;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 5px;
+    top: 1px;
+    width: 4px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.mdc-checkbox-label input:checked~.checkmark:after {
+    display: block;
+}
+
+.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 48px 0;
+    gap: 16px;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 14px;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #e0e0e0;
+    border-top: 4px solid #42a5f5;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+.section-title {
+    margin: 32px 0 8px 12px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #7c4dff;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 0 16px 24px;
+}
+
+.repo-card {
+    background: white;
+    padding: 24px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.repo-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.repo-card h3 {
+    margin-bottom: 8px;
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.15px;
+}
+
+.repo-card p {
+    color: rgba(0, 0, 0, 0.6);
+    margin-bottom: 16px;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.repo-card a {
+    color: #42a5f5;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.repo-card a:hover {
+    color: #7c4dff;
+    text-decoration: underline;
+}
+
+.files-list {
+    list-style: none;
+    margin-top: 16px;
+    margin-bottom: 1em;
+    background: #fafafa;
+    padding: 16px;
+    border-radius: 4px;
+    border-left: 4px solid #42a5f5;
+}
+
+.files-list li {
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    background: white;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.files-list li:hover {
+    background: #f5f5f5;
+}
+
+.files-list a {
+    color: #42a5f5;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.files-list a:hover {
+    color: #7c4dff;
+    text-decoration: underline;
+}
+
+.related-subjects {
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .app-bar {
+        padding: 16px;
+    }
+
+    h1 {
+        font-size: 18px;
+    }
+
+    .search-card {
+        margin: 16px 8px;
+        padding: 16px;
+    }
+
+    .search-container {
+        flex-direction: column;
+    }
+
+    .input-field {
+        width: 100%;
+    }
+
+    .mdc-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .repo-card {
+        padding: 16px;
+    }
+
+    .results {
+        padding: 0 8px 16px;
+    }
+
+    .section-title {
+        margin: 24px 0 8px 4px;
+        font-size: 16px;
+    }
+}
